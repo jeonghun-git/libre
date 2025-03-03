@@ -85,7 +85,6 @@ junit.xml
 **/venv/
 
 # docker override file
-속ㅎㅎ
 # meilisearch
 meilisearch
 meilisearch.exe

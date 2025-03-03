@@ -2,14 +2,14 @@
 # https://www.librechat.ai/docs/configuration/librechat_yaml
 
 # Configuration version (required)
-version: 1.2.1
+version: 1.0.0
 
 # Cache settings: Set to true to enable caching
 cache: true
 
 # Custom interface configuration
 interface:
-  customWelcome: "jhun-park LLM"
+  customWelcome: "jeonghun-chat"
   # Privacy policy settings
   # privacyPolicy:
   #   externalUrl: 'https://librechat.ai/privacy-policy'
@@ -64,9 +64,9 @@ interface:
   sidePanel: true
   presets: true
   prompts: true
-  bookmarks: true
-  multiConvo: true
-  agents: true
+  bookmarks: false
+  multiConvo: false
+  agents: false
 
 # Example Registration Object Structure (optional)
 registration:
@@ -109,30 +109,30 @@ actions:
     - "google.com"
 
 # Example MCP Servers Object Structure
-mcpServers:
-  everything:
-    # type: sse # type can optionally be omitted
-    url: http://localhost:3001/sse
-  puppeteer:
-    type: stdio
-    command: npx
-    args:
-      - -y
-      - "@modelcontextprotocol/server-puppeteer"
-  filesystem:
-    # type: stdio
-    command: npx
-    args:
-      - -y
-      - "@modelcontextprotocol/server-filesystem"
-      - /home/user/LibreChat/
-    iconPath: /home/user/LibreChat/client/public/assets/logo.svg
-  mcp-obsidian:
-    command: npx
-    args:
-      - -y
-      - "mcp-obsidian"
-      - /path/to/obsidian/vault
+# mcpServers:
+#   everything:
+#     # type: sse # type can optionally be omitted
+#     url: http://localhost:3001/sse
+#   puppeteer:
+#     type: stdio
+#     command: npx
+#     args:
+#       - -y
+#       - "@modelcontextprotocol/server-puppeteer"
+#   filesystem:
+#     # type: stdio
+#     command: npx
+#     args:
+#       - -y
+#       - "@modelcontextprotocol/server-filesystem"
+#       - /home/user/LibreChat/
+#     iconPath: /home/user/LibreChat/client/public/assets/logo.svg
+#   mcp-obsidian:
+#     command: npx
+#     args:
+#       - -y
+#       - "mcp-obsidian"
+#       - /path/to/obsidian/vault
 
 # Definition of custom endpoints
 endpoints:
@@ -158,22 +158,19 @@ endpoints:
   #   capabilities: ["execute_code", "file_search", "actions", "tools"]
   custom:
     # Groq Example
-    # - name: 'groq'
-    #   apiKey: '${GROQ_API_KEY}'
-    #   baseURL: 'https://api.groq.com/openai/v1/'
-    #   models:
-    #     default:
-    #       [
-    #         'llama3-70b-8192',
-    #         'llama3-8b-8192',
-    #         'llama2-70b-4096',
-    #         'mixtral-8x7b-32768',
-    #         'gemma-7b-it',
-    #       ]
-    #     fetch: false
-    #   titleConvo: true
-    #   titleModel: 'mixtral-8x7b-32768'
-    #   modelDisplayLabel: 'groq'
+    - name: 'DeepSeek'
+      apiKey: user_provided
+      baseURL: 'https://api.deepseek.com'
+      models:
+        default:
+          [
+            'deepseek-chat',
+            'deepseek-reasoner',
+          ]
+        fetch: true
+      titleConvo: true
+      titleModel: 'deepseek-reasoner'
+      modelDisplayLabel: 'deepseek'
 
     # Mistral AI Example
     # - name: 'Mistral' # Unique name for the endpoint
@@ -224,13 +221,13 @@ endpoints:
     - name: 'OpenRouter'
       # For `apiKey` and `baseURL`, you can use environment variables that you define.
       # recommended environment variables:
-      apiKey: '${OPENROUTER_KEY}'
+      apiKey: user_provided
       baseURL: 'https://openrouter.ai/api/v1'
       models:
-        default: ['deepseek/deepseek-v3:free', 'deepseek/deepseek-r1:free', 'deepseek/deepseek-v3', 'deepseek/deepseek-r1','google/gemini-1.5-flash', ]
+        default: ['deepseek/deepseek-r1:free', 'deepseek/deepseek-v3', 'deepseek/deepseek-r1','google/gemini-1.5-flash', ]
         fetch: true
       titleConvo: true
-      titleModel: 'deepseek/deepseek-chat'
+      titleModel: 'deepseek/deepseek-v3'
       # Recommended: Drop the stop parameter from the request as Openrouter models use a variety of stop tokens.
       dropParams: ['stop']
       modelDisplayLabel: 'OpenRouter'
