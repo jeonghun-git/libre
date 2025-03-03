@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
 import { MessageSquare, Command } from 'lucide-react';
 import { SettingsTabValues } from 'librechat-data-provider';
@@ -6,7 +6,7 @@ import type { TDialogProps } from '~/common';
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import { GearIcon, DataIcon, SpeechIcon, UserIcon, ExperimentIcon } from '~/components/svg';
 import { General, Chat, Speech, Beta, Commands, Data, Account } from './SettingsTabs';
-import { useMediaQuery, useLocalize, TranslationKeys } from '~/hooks';
+import { useMediaQuery, useLocalize } from '~/hooks';
 import { cn } from '~/utils';
 
 export default function Settings({ open, onOpenChange }: TDialogProps) {
@@ -46,44 +46,6 @@ export default function Settings({ open, onOpenChange }: TDialogProps) {
         break;
     }
   };
-
-  const settingsTabs: { value: SettingsTabValues; icon:  React.JSX.Element; label: TranslationKeys }[] = [
-    {
-      value: SettingsTabValues.GENERAL,
-      icon: <GearIcon />,
-      label: 'com_nav_setting_general',
-    },
-    {
-      value: SettingsTabValues.CHAT,
-      icon: <MessageSquare className="icon-sm" />,
-      label: 'com_nav_setting_chat',
-    },
-    {
-      value: SettingsTabValues.BETA,
-      icon: <ExperimentIcon />,
-      label: 'com_nav_setting_beta',
-    },
-    {
-      value: SettingsTabValues.COMMANDS,
-      icon: <Command className="icon-sm" />,
-      label: 'com_nav_commands',
-    },
-    {
-      value: SettingsTabValues.SPEECH,
-      icon: <SpeechIcon className="icon-sm" />,
-      label: 'com_nav_setting_speech',
-    },
-    {
-      value: SettingsTabValues.DATA,
-      icon: <DataIcon />,
-      label: 'com_nav_setting_data',
-    },
-    {
-      value: SettingsTabValues.ACCOUNT,
-      icon: <UserIcon />,
-      label: 'com_nav_setting_account',
-    },
-  ];
 
   const handleTabChange = (value: string) => {
     setActiveTab(value as SettingsTabValues);
@@ -164,7 +126,43 @@ export default function Settings({ open, onOpenChange }: TDialogProps) {
                     )}
                     onKeyDown={handleKeyDown}
                   >
-                    {settingsTabs.map(({ value, icon, label }) => (
+                    {[
+                      {
+                        value: SettingsTabValues.GENERAL,
+                        icon: <GearIcon />,
+                        label: 'com_nav_setting_general',
+                      },
+                      {
+                        value: SettingsTabValues.CHAT,
+                        icon: <MessageSquare className="icon-sm" />,
+                        label: 'com_nav_setting_chat',
+                      },
+                      {
+                        value: SettingsTabValues.BETA,
+                        icon: <ExperimentIcon />,
+                        label: 'com_nav_setting_beta',
+                      },
+                      {
+                        value: SettingsTabValues.COMMANDS,
+                        icon: <Command className="icon-sm" />,
+                        label: 'com_nav_commands',
+                      },
+                      {
+                        value: SettingsTabValues.SPEECH,
+                        icon: <SpeechIcon className="icon-sm" />,
+                        label: 'com_nav_setting_speech',
+                      },
+                      {
+                        value: SettingsTabValues.DATA,
+                        icon: <DataIcon />,
+                        label: 'com_nav_setting_data',
+                      },
+                      {
+                        value: SettingsTabValues.ACCOUNT,
+                        icon: <UserIcon />,
+                        label: 'com_nav_setting_account',
+                      },
+                    ].map(({ value, icon, label }) => (
                       <Tabs.Trigger
                         key={value}
                         className={cn(

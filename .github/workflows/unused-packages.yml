@@ -1,12 +1,6 @@
 name: Detect Unused NPM Packages
 
-on:
-  pull_request:
-    paths:
-      - 'package.json'
-      - 'package-lock.json'
-      - 'client/**'
-      - 'api/**'
+on: [pull_request]
 
 jobs:
   detect-unused-packages:

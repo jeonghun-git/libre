@@ -12,7 +12,7 @@ export default function ArchivedChats() {
       <OGDialog>
         <OGDialogTrigger asChild>
           <Button variant="outline" aria-label="Archived chats">
-            {localize('com_ui_manage')}
+            {localize('com_nav_archived_chats_manage')}
           </Button>
         </OGDialogTrigger>
         <OGDialogTemplate

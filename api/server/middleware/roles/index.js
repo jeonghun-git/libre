@@ -1,8 +1,7 @@
 const checkAdmin = require('./checkAdmin');
-const { checkAccess, generateCheckAccess } = require('./generateCheckAccess');
+const generateCheckAccess = require('./generateCheckAccess');
 
 module.exports = {
   checkAdmin,
-  checkAccess,
   generateCheckAccess,
 };

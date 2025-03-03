@@ -39,12 +39,6 @@ const Session = mongoose.Schema({
   },
 });
 
-const backupCodeSchema = mongoose.Schema({
-  codeHash: { type: String, required: true },
-  used: { type: Boolean, default: false },
-  usedAt: { type: Date, default: null },
-});
-
 /** @type {MongooseSchema<MongoUser>} */
 const userSchema = mongoose.Schema(
   {
@@ -125,12 +119,7 @@ const userSchema = mongoose.Schema(
     },
     plugins: {
       type: Array,
-    },
-    totpSecret: {
-      type: String,
-    },
-    backupCodes: {
-      type: [backupCodeSchema],
+      default: [],
     },
     refreshToken: {
       type: [Session],

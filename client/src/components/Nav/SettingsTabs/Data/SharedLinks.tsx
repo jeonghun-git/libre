@@ -270,7 +270,9 @@ export default function SharedLinks() {
 
       <OGDialog open={isOpen} onOpenChange={setIsOpen}>
         <OGDialogTrigger asChild onClick={() => setIsOpen(true)}>
-          <Button variant="outline">{localize('com_ui_manage')}</Button>
+          <button className="btn btn-neutral relative">
+            {localize('com_nav_shared_links_manage')}
+          </button>
         </OGDialogTrigger>
 
         <OGDialogContent

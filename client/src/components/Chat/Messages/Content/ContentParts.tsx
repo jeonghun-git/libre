@@ -109,9 +109,7 @@ const ContentParts = memo(
                   return val;
                 })
               }
-              label={
-                isSubmitting && isLast ? localize('com_ui_thinking') : localize('com_ui_thoughts')
-              }
+              label={isSubmitting ? localize('com_ui_thinking') : localize('com_ui_thoughts')}
             />
           </div>
         )}

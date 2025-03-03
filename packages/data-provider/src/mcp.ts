@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { extractEnvVariable } from './utils';
 
 const BaseOptionsSchema = z.object({
   iconPath: z.string().optional(),
@@ -19,22 +18,8 @@ export const StdioOptionsSchema = BaseOptionsSchema.extend({
    * The environment to use when spawning the process.
    *
    * If not specified, the result of getDefaultEnvironment() will be used.
-   * Environment variables can be referenced using ${VAR_NAME} syntax.
    */
-  env: z
-    .record(z.string(), z.string())
-    .optional()
-    .transform((env) => {
-      if (!env) {
-        return env;
-      }
-
-      const processedEnv: Record<string, string> = {};
-      for (const [key, value] of Object.entries(env)) {
-        processedEnv[key] = extractEnvVariable(value);
-      }
-      return processedEnv;
-    }),
+  env: z.record(z.string(), z.string()).optional(),
   /**
    * How to handle stderr of the child process. This matches the semantics of Node's `child_process.spawn`.
    *

@@ -1,9 +1,10 @@
+
 import { z } from 'zod';
 import type { ZodError } from 'zod';
 import type { TModelsConfig } from './types';
 import { EModelEndpoint, eModelEndpointSchema } from './schemas';
-import { specsConfigSchema, TSpecsConfig } from './models';
 import { fileConfigSchema } from './file-config';
+import { specsConfigSchema, TSpecsConfig } from './models';
 import { FileSources } from './types/files';
 import { MCPServersSchema } from './mcp';
 
@@ -15,7 +16,6 @@ export const defaultRetrievalModels = [
   'o1-preview',
   'o1-mini-2024-09-12',
   'o1-mini',
-  'o3-mini',
   'chatgpt-4o-latest',
   'gpt-4o-2024-05-13',
   'gpt-4o-2024-08-06',
@@ -31,27 +31,6 @@ export const defaultRetrievalModels = [
   'gpt-4-0125',
   'gpt-4-1106',
 ];
-
-export const excludedKeys = new Set([
-  'conversationId',
-  'title',
-  'iconURL',
-  'greeting',
-  'endpoint',
-  'endpointType',
-  'createdAt',
-  'updatedAt',
-  'expiredAt',
-  'messages',
-  'isArchived',
-  'tags',
-  'user',
-  '__v',
-  '_id',
-  'tools',
-  'model',
-  'files',
-]);
 
 export enum SettingsViews {
   default = 'default',
@@ -165,7 +144,6 @@ export enum AgentCapabilities {
   end_after_tools = 'end_after_tools',
   execute_code = 'execute_code',
   file_search = 'file_search',
-  artifacts = 'artifacts',
   actions = 'actions',
   tools = 'tools',
 }
@@ -239,7 +217,6 @@ export const agentsEndpointSChema = baseEndpointSchema.merge(
       .default([
         AgentCapabilities.execute_code,
         AgentCapabilities.file_search,
-        AgentCapabilities.artifacts,
         AgentCapabilities.actions,
         AgentCapabilities.tools,
       ]),
@@ -468,7 +445,6 @@ export const intefaceSchema = z
       })
       .optional(),
     termsOfService: termsOfServiceSchema.optional(),
-    customWelcome: z.string().optional(),
     endpointsMenu: z.boolean().optional(),
     modelSelect: z.boolean().optional(),
     parameters: z.boolean().optional(),
@@ -479,7 +455,6 @@ export const intefaceSchema = z
     prompts: z.boolean().optional(),
     agents: z.boolean().optional(),
     temporaryChat: z.boolean().optional(),
-    runCode: z.boolean().optional(),
   })
   .default({
     endpointsMenu: true,
@@ -492,7 +467,6 @@ export const intefaceSchema = z
     prompts: true,
     agents: true,
     temporaryChat: true,
-    runCode: true,
   });
 
 export type TInterfaceConfig = z.infer<typeof intefaceSchema>;
@@ -645,15 +619,12 @@ export const alternateName = {
   [EModelEndpoint.custom]: 'Custom',
   [EModelEndpoint.bedrock]: 'AWS Bedrock',
   [KnownEndpoints.ollama]: 'Ollama',
-  [KnownEndpoints.deepseek]: 'DeepSeek',
   [KnownEndpoints.xai]: 'xAI',
 };
 
 const sharedOpenAIModels = [
   'gpt-4o-mini',
   'gpt-4o',
-  'gpt-4.5-preview',
-  'gpt-4.5-preview-2025-02-27',
   'gpt-3.5-turbo',
   'gpt-3.5-turbo-0125',
   'gpt-4-turbo',
@@ -672,8 +643,6 @@ const sharedOpenAIModels = [
 ];
 
 const sharedAnthropicModels = [
-  'claude-3-7-sonnet-latest',
-  'claude-3-7-sonnet-20250219',
   'claude-3-5-haiku-20241022',
   'claude-3-5-sonnet-20241022',
   'claude-3-5-sonnet-20240620',
@@ -726,14 +695,14 @@ export const bedrockModels = [
 
 export const defaultModels = {
   [EModelEndpoint.azureAssistants]: sharedOpenAIModels,
-  [EModelEndpoint.assistants]: [...sharedOpenAIModels, 'chatgpt-4o-latest'],
+  [EModelEndpoint.assistants]: ['chatgpt-4o-latest', ...sharedOpenAIModels],
   [EModelEndpoint.agents]: sharedOpenAIModels, // TODO: Add agent models (agentsModels)
   [EModelEndpoint.google]: [
     // Shared Google Models between Vertex AI & Gen AI
     // Gemini 2.0 Models
     'gemini-2.0-flash-001',
     'gemini-2.0-flash-exp',
-    'gemini-2.0-flash-lite',
+    'gemini-2.0-flash-lite-preview-02-05',
     'gemini-2.0-pro-exp-02-05',
     // Gemini 1.5 Models
     'gemini-1.5-flash-001',
@@ -745,8 +714,8 @@ export const defaultModels = {
   ],
   [EModelEndpoint.anthropic]: sharedAnthropicModels,
   [EModelEndpoint.openAI]: [
-    ...sharedOpenAIModels,
     'chatgpt-4o-latest',
+    ...sharedOpenAIModels,
     'gpt-4-vision-preview',
     'gpt-3.5-turbo-instruct-0914',
     'gpt-3.5-turbo-instruct',
@@ -811,7 +780,6 @@ export const supportsBalanceCheck = {
 };
 
 export const visionModels = [
-  'gpt-4.5',
   'gpt-4o',
   'gpt-4o-mini',
   'o1',
@@ -860,7 +828,7 @@ export function validateVisionModel({
   return visionModels.concat(additionalModels).some((visionModel) => model.includes(visionModel));
 }
 
-export const imageGenTools = new Set(['dalle', 'dall-e', 'stable-diffusion', 'flux']);
+export const imageGenTools = new Set(['dalle', 'dall-e', 'stable-diffusion']);
 
 /**
  * Enum for collections using infinite queries
@@ -1239,9 +1207,7 @@ export enum ForkOptions {
   /** Key for including branches */
   INCLUDE_BRANCHES = 'includeBranches',
   /** Key for target level fork (default) */
-  TARGET_LEVEL = 'targetLevel',
-  /** Default option */
-  DEFAULT = 'default',
+  TARGET_LEVEL = '',
 }
 
 /**

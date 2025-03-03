@@ -35,9 +35,6 @@ const agentSchema = mongoose.Schema(
     model_parameters: {
       type: Object,
     },
-    artifacts: {
-      type: String,
-    },
     access_level: {
       type: Number,
     },

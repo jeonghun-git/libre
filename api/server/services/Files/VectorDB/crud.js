@@ -37,14 +37,7 @@ const deleteVectors = async (req, file) => {
       error,
       message: 'Error deleting vectors',
     });
-    if (
-      error.response &&
-      error.response.status !== 404 &&
-      (error.response.status < 200 || error.response.status >= 300)
-    ) {
-      logger.warn('Error deleting vectors, file will not be deleted');
-      throw new Error(error.message || 'An error occurred during file deletion.');
-    }
+    throw new Error(error.message || 'An error occurred during file deletion.');
   }
 };
 

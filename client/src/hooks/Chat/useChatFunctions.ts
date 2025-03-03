@@ -170,10 +170,7 @@ export default function useChatFunctions({
         endpointType,
         overrideConvoId,
         overrideUserMessageId,
-        artifacts:
-          endpoint !== EModelEndpoint.agents
-            ? getArtifactsMode({ codeArtifacts, includeShadcnui, customPromptMode })
-            : undefined,
+        artifacts: getArtifactsMode({ codeArtifacts, includeShadcnui, customPromptMode }),
       },
       convo,
     ) as TEndpointOption;
@@ -231,6 +228,7 @@ export default function useChatFunctions({
       conversationId,
       unfinished: false,
       isCreatedByUser: false,
+      isEdited: isEditOrContinue,
       iconURL: convo?.iconURL,
       model: convo?.model,
       error: false,

@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
-import { TOptions } from 'i18next';
+import { useEffect, useCallback } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
-import { resources } from '~/locales/i18n';
+import { TOptions } from 'i18next';
 import store from '~/store';
+import { resources } from '~/locales/i18n';
 
 export type TranslationKeys = keyof typeof resources.en.translation;
 
@@ -17,5 +17,10 @@ export default function useLocalize() {
     }
   }, [lang, i18n]);
 
-  return (phraseKey: TranslationKeys, options?: TOptions) => t(phraseKey, options);
+  const memoizedLocalize = useCallback(
+    (phraseKey: TranslationKeys, options?: TOptions) => t(phraseKey, options),
+    [t],
+  );
+
+  return memoizedLocalize;
 }

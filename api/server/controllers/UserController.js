@@ -19,9 +19,7 @@ const { Transaction } = require('~/models/Transaction');
 const { logger } = require('~/config');
 
 const getUserController = async (req, res) => {
-  const userData = req.user.toObject != null ? req.user.toObject() : { ...req.user };
-  delete userData.totpSecret;
-  res.status(200).send(userData);
+  res.status(200).send(req.user);
 };
 
 const getTermsStatusController = async (req, res) => {

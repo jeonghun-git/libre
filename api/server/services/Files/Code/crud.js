@@ -2,7 +2,6 @@
 const axios = require('axios');
 const FormData = require('form-data');
 const { getCodeBaseURL } = require('@librechat/agents');
-const { logAxiosError } = require('~/utils');
 
 const MAX_FILE_SIZE = 150 * 1024 * 1024;
 
@@ -79,11 +78,7 @@ async function uploadCodeEnvFile({ req, stream, filename, apiKey, entity_id = ''
 
     return `${fileIdentifier}?entity_id=${entity_id}`;
   } catch (error) {
-    logAxiosError({
-      message: `Error uploading code environment file: ${error.message}`,
-      error,
-    });
-    throw new Error(`Error uploading code environment file: ${error.message}`);
+    throw new Error(`Error uploading file: ${error.message}`);
   }
 }
 

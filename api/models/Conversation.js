@@ -104,16 +104,10 @@ module.exports = {
         update.expiredAt = null;
       }
 
-      /** @type {{ $set: Partial<TConversation>; $unset?: Record<keyof TConversation, number> }} */
-      const updateOperation = { $set: update };
-      if (metadata && metadata.unsetFields && Object.keys(metadata.unsetFields).length > 0) {
-        updateOperation.$unset = metadata.unsetFields;
-      }
-
       /** Note: the resulting Model object is necessary for Meilisearch operations */
       const conversation = await Conversation.findOneAndUpdate(
         { conversationId, user: req.user.id },
-        updateOperation,
+        update,
         {
           new: true,
           upsert: true,

@@ -8,7 +8,7 @@ import {
   createContext,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { setTokenHeader, SystemRoles } from 'librechat-data-provider';
 import type * as t from 'librechat-data-provider';
 import {
@@ -70,12 +70,7 @@ const AuthContextProvider = ({
 
   const loginUser = useLoginUserMutation({
     onSuccess: (data: t.TLoginResponse) => {
-      const { user, token, twoFAPending, tempToken } = data;
-      if (twoFAPending) {
-        // Redirect to the two-factor authentication route.
-        navigate(`/login/2fa?tempToken=${tempToken}`, { replace: true });
-        return;
-      }
+      const { user, token } = data;
       setError(undefined);
       setUserContext({ token, isAuthenticated: true, user, redirect: '/c/new' });
     },
@@ -200,7 +195,7 @@ const AuthContextProvider = ({
       },
       isAuthenticated,
     }),
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [user, error, isAuthenticated, token, userRole, adminRole],
   );
 
@@ -217,4 +212,4 @@ const useAuthContext = () => {
   return context;
 };
 
-export { AuthContextProvider, useAuthContext, AuthContext };
+export { AuthContextProvider, useAuthContext };

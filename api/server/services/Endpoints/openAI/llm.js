@@ -1,5 +1,4 @@
 const { HttpsProxyAgent } = require('https-proxy-agent');
-const { KnownEndpoints } = require('librechat-data-provider');
 const { sanitizeModelName, constructAzureURL } = require('~/utils');
 const { isEnabled } = require('~/server/utils');
 
@@ -29,6 +28,7 @@ function getLLMConfig(apiKey, options = {}) {
   const {
     modelOptions = {},
     reverseProxyUrl,
+    useOpenRouter,
     defaultQuery,
     headers,
     proxy,
@@ -55,13 +55,12 @@ function getLLMConfig(apiKey, options = {}) {
     });
   }
 
-  let useOpenRouter;
   /** @type {OpenAIClientOptions['configuration']} */
   const configOptions = {};
-  if (reverseProxyUrl && reverseProxyUrl.includes(KnownEndpoints.openrouter)) {
-    useOpenRouter = true;
-    llmConfig.include_reasoning = true;
-    configOptions.baseURL = reverseProxyUrl;
+
+  // Handle OpenRouter or custom reverse proxy
+  if (useOpenRouter || reverseProxyUrl === 'https://openrouter.ai/api/v1') {
+    configOptions.baseURL = 'https://openrouter.ai/api/v1';
     configOptions.defaultHeaders = Object.assign(
       {
         'HTTP-Referer': 'https://librechat.ai',
@@ -117,13 +116,6 @@ function getLLMConfig(apiKey, options = {}) {
 
   if (process.env.OPENAI_ORGANIZATION && this.azure) {
     llmConfig.organization = process.env.OPENAI_ORGANIZATION;
-  }
-
-  if (useOpenRouter && llmConfig.reasoning_effort != null) {
-    llmConfig.reasoning = {
-      effort: llmConfig.reasoning_effort,
-    };
-    delete llmConfig.reasoning_effort;
   }
 
   return {

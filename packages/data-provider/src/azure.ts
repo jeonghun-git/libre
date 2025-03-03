@@ -6,9 +6,8 @@ import type {
   TValidatedAzureConfig,
   TAzureConfigValidationResult,
 } from '../src/config';
-import { extractEnvVariable, envVarRegex } from '../src/utils';
+import { errorsToString, extractEnvVariable, envVarRegex } from '../src/parsers';
 import { azureGroupConfigsSchema } from '../src/config';
-import { errorsToString } from '../src/parsers';
 
 export const deprecatedAzureVariables = [
   /* "related to" precedes description text */

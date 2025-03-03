@@ -78,7 +78,6 @@ export default function AssistantSwitcher({ isCollapsed }: SwitcherProps) {
       ariaLabel={'assistant'}
       setValue={onSelect}
       items={assistantOptions}
-      iconClassName="assistant-item"
       SelectIcon={
         <Icon
           isCreatedByUser={false}

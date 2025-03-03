@@ -278,40 +278,10 @@ const anthropic: Record<string, SettingDefinition> = {
     description: 'com_endpoint_anthropic_prompt_cache',
     descriptionCode: true,
     type: 'boolean',
-    default: anthropicSettings.promptCache.default,
+    default: true,
     component: 'switch',
     optionType: 'conversation',
     showDefault: false,
-    columnSpan: 2,
-  },
-  thinking: {
-    key: 'thinking',
-    label: 'com_endpoint_thinking',
-    labelCode: true,
-    description: 'com_endpoint_anthropic_thinking',
-    descriptionCode: true,
-    type: 'boolean',
-    default: anthropicSettings.thinking.default,
-    component: 'switch',
-    optionType: 'conversation',
-    showDefault: false,
-    columnSpan: 2,
-  },
-  thinkingBudget: {
-    key: 'thinkingBudget',
-    label: 'com_endpoint_thinking_budget',
-    labelCode: true,
-    description: 'com_endpoint_anthropic_thinking_budget',
-    descriptionCode: true,
-    type: 'number',
-    component: 'input',
-    default: anthropicSettings.thinkingBudget.default,
-    range: {
-      min: anthropicSettings.thinkingBudget.min,
-      max: anthropicSettings.thinkingBudget.max,
-      step: anthropicSettings.thinkingBudget.step,
-    },
-    optionType: 'conversation',
     columnSpan: 2,
   },
 };
@@ -522,8 +492,6 @@ const anthropicConfig: SettingsConfiguration = [
   anthropic.topK,
   librechat.resendFiles,
   anthropic.promptCache,
-  anthropic.thinking,
-  anthropic.thinkingBudget,
 ];
 
 const anthropicCol1: SettingsConfiguration = [
@@ -540,8 +508,6 @@ const anthropicCol2: SettingsConfiguration = [
   anthropic.topK,
   librechat.resendFiles,
   anthropic.promptCache,
-  anthropic.thinking,
-  anthropic.thinkingBudget,
 ];
 
 const bedrockAnthropic: SettingsConfiguration = [

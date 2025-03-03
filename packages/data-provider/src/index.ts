@@ -31,6 +31,5 @@ export { default as request } from './request';
 export { dataService };
 import * as dataService from './data-service';
 /* general helpers */
-export * from './utils';
 export * from './actions';
 export { default as createPayload } from './createPayload';

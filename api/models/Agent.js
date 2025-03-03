@@ -97,22 +97,11 @@ const updateAgent = async (searchParameter, updateData) => {
 const addAgentResourceFile = async ({ agent_id, tool_resource, file_id }) => {
   const searchParameter = { id: agent_id };
 
+  // build the update to push or create the file ids set
   const fileIdsPath = `tool_resources.${tool_resource}.file_ids`;
-
-  await Agent.updateOne(
-    {
-      id: agent_id,
-      [`${fileIdsPath}`]: { $exists: false },
-    },
-    {
-      $set: {
-        [`${fileIdsPath}`]: [],
-      },
-    },
-  );
-
   const updateData = { $addToSet: { [fileIdsPath]: file_id } };
 
+  // return the updated agent or throw if no agent matches
   const updatedAgent = await updateAgent(searchParameter, updateData);
   if (updatedAgent) {
     return updatedAgent;
@@ -301,7 +290,6 @@ const updateAgentProjects = async ({ user, agentId, projectIds, removeProjectIds
 };
 
 module.exports = {
-  Agent,
   getAgent,
   loadAgent,
   createAgent,

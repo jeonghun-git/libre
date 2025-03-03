@@ -106,21 +106,18 @@ const createFileSearchTool = async ({ req, files, entity_id }) => {
 
       const formattedResults = validResults
         .flatMap((result) =>
-          result.data.map(([docInfo, distance]) => ({
+          result.data.map(([docInfo, relevanceScore]) => ({
             filename: docInfo.metadata.source.split('/').pop(),
             content: docInfo.page_content,
-            distance,
+            relevanceScore,
           })),
         )
-        // TODO: results should be sorted by relevance, not distance
-        .sort((a, b) => a.distance - b.distance)
-        // TODO: make this configurable
-        .slice(0, 10);
+        .sort((a, b) => b.relevanceScore - a.relevanceScore);
 
       const formattedString = formattedResults
         .map(
           (result) =>
-            `File: ${result.filename}\nRelevance: ${1.0 - result.distance.toFixed(4)}\nContent: ${
+            `File: ${result.filename}\nRelevance: ${result.relevanceScore.toFixed(4)}\nContent: ${
               result.content
             }\n`,
         )

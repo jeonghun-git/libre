@@ -13,7 +13,6 @@ const getBedrockOptions = require('~/server/services/Endpoints/bedrock/options')
 const initOpenAI = require('~/server/services/Endpoints/openAI/initialize');
 const initCustom = require('~/server/services/Endpoints/custom/initialize');
 const initGoogle = require('~/server/services/Endpoints/google/initialize');
-const generateArtifactsPrompt = require('~/app/clients/prompts/artifacts');
 const { getCustomEndpointConfig } = require('~/server/services/Config');
 const { loadAgentTools } = require('~/server/services/ToolService');
 const AgentClient = require('~/server/controllers/agents/client');
@@ -22,14 +21,12 @@ const { getAgent } = require('~/models/Agent');
 const { logger } = require('~/config');
 
 const providerConfigMap = {
-  [Providers.OLLAMA]: initCustom,
-  [Providers.DEEPSEEK]: initCustom,
-  [Providers.OPENROUTER]: initCustom,
   [EModelEndpoint.openAI]: initOpenAI,
-  [EModelEndpoint.google]: initGoogle,
   [EModelEndpoint.azureOpenAI]: initOpenAI,
   [EModelEndpoint.anthropic]: initAnthropic,
   [EModelEndpoint.bedrock]: getBedrockOptions,
+  [EModelEndpoint.google]: initGoogle,
+  [Providers.OLLAMA]: initCustom,
 };
 
 /**
@@ -75,16 +72,6 @@ const primeResources = async (_attachments, _tool_resources) => {
   }
 };
 
-/**
- * @param {object} params
- * @param {ServerRequest} params.req
- * @param {ServerResponse} params.res
- * @param {Agent} params.agent
- * @param {object} [params.endpointOption]
- * @param {AgentToolResources} [params.tool_resources]
- * @param {boolean} [params.isInitialAgent]
- * @returns {Promise<Agent>}
- */
 const initializeAgentOptions = async ({
   req,
   res,
@@ -102,10 +89,8 @@ const initializeAgentOptions = async ({
 
   const provider = agent.provider;
   let getOptions = providerConfigMap[provider];
-  if (!getOptions && providerConfigMap[provider.toLowerCase()] != null) {
-    agent.provider = provider.toLowerCase();
-    getOptions = providerConfigMap[agent.provider];
-  } else if (!getOptions) {
+
+  if (!getOptions) {
     const customEndpointConfig = await getCustomEndpointConfig(provider);
     if (!customEndpointConfig) {
       throw new Error(`Provider ${provider} not supported`);
@@ -145,13 +130,6 @@ const initializeAgentOptions = async ({
 
   if (!agent.model_parameters.model) {
     agent.model_parameters.model = agent.model;
-  }
-
-  if (typeof agent.artifacts === 'string' && agent.artifacts !== '') {
-    agent.additional_instructions = generateArtifactsPrompt({
-      endpoint: agent.provider,
-      artifacts: agent.artifacts,
-    });
   }
 
   const tokensModel =

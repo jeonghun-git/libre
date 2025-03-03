@@ -20,6 +20,8 @@ const convoSchema = mongoose.Schema(
       index: true,
     },
     messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
+    // google only
+    examples: { type: [{ type: mongoose.Schema.Types.Mixed }], default: undefined },
     agentOptions: {
       type: mongoose.Schema.Types.Mixed,
     },
@@ -46,12 +48,12 @@ if (process.env.MEILI_HOST && process.env.MEILI_MASTER_KEY) {
   convoSchema.plugin(mongoMeili, {
     host: process.env.MEILI_HOST,
     apiKey: process.env.MEILI_MASTER_KEY,
-    /** Note: Will get created automatically if it doesn't exist already */
-    indexName: 'convos',
+    indexName: 'convos', // Will get created automatically if it doesn't exist already
     primaryKey: 'conversationId',
   });
 }
 
+// Create TTL index
 convoSchema.index({ expiredAt: 1 }, { expireAfterSeconds: 0 });
 convoSchema.index({ createdAt: 1, updatedAt: 1 });
 convoSchema.index({ conversationId: 1, user: 1 }, { unique: true });

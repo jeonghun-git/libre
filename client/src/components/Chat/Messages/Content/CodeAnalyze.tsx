@@ -7,9 +7,6 @@ import FinishedIcon from './FinishedIcon';
 import MarkdownLite from './MarkdownLite';
 import store from '~/store';
 
-const radius = 56.08695652173913;
-const circumference = 2 * Math.PI * radius;
-
 export default function CodeAnalyze({
   initialProgress = 0.1,
   code,
@@ -25,6 +22,9 @@ export default function CodeAnalyze({
   const progress = useProgress(initialProgress);
   const showAnalysisCode = useRecoilValue(store.showCode);
   const [showCode, setShowCode] = useState(showAnalysisCode);
+
+  const radius = 56.08695652173913;
+  const circumference = 2 * Math.PI * radius;
   const offset = circumference - progress * circumference;
 
   const logs = outputs.reduce((acc, output) => {
@@ -53,10 +53,9 @@ export default function CodeAnalyze({
         <ProgressText
           progress={progress}
           onClick={() => setShowCode((prev) => !prev)}
-          inProgressText={localize('com_ui_analyzing')}
-          finishedText={localize('com_ui_analyzing_finished')}
+          inProgressText="Analyzing"
+          finishedText="Finished analyzing"
           hasInput={!!code.length}
-          isExpanded={showCode}
         />
       </div>
       {showCode && (

@@ -1,5 +1,4 @@
-const { nanoid } = require('nanoid');
-const { Tools, StepTypes, FileContext } = require('librechat-data-provider');
+const { Tools, StepTypes, imageGenTools, FileContext } = require('librechat-data-provider');
 const {
   EnvVar,
   Providers,
@@ -200,22 +199,6 @@ function getDefaultHandlers({ res, aggregateContent, toolEndCallback, collectedU
         aggregateContent({ event, data });
       },
     },
-    [GraphEvents.ON_REASONING_DELTA]: {
-      /**
-       * Handle ON_REASONING_DELTA event.
-       * @param {string} event - The event name.
-       * @param {StreamEventData} data - The event data.
-       * @param {GraphRunnableConfig['configurable']} [metadata] The runnable metadata.
-       */
-      handle: (event, data, metadata) => {
-        if (metadata?.last_agent_index === metadata?.agent_index) {
-          sendEvent(res, { event, data });
-        } else if (!metadata?.hide_sequential_outputs) {
-          sendEvent(res, { event, data });
-        }
-        aggregateContent({ event, data });
-      },
-    },
   };
 
   return handlers;
@@ -243,6 +226,32 @@ function createToolEndCallback({ req, res, artifactPromises }) {
       return;
     }
 
+    if (imageGenTools.has(output.name)) {
+      artifactPromises.push(
+        (async () => {
+          const fileMetadata = Object.assign(output.artifact, {
+            messageId: metadata.run_id,
+            toolCallId: output.tool_call_id,
+            conversationId: metadata.thread_id,
+          });
+          if (!res.headersSent) {
+            return fileMetadata;
+          }
+
+          if (!fileMetadata) {
+            return null;
+          }
+
+          res.write(`event: attachment\ndata: ${JSON.stringify(fileMetadata)}\n\n`);
+          return fileMetadata;
+        })().catch((error) => {
+          logger.error('Error processing code output:', error);
+          return null;
+        }),
+      );
+      return;
+    }
+
     if (output.artifact.content) {
       /** @type {FormattedContent[]} */
       const content = output.artifact.content;
@@ -253,7 +262,7 @@ function createToolEndCallback({ req, res, artifactPromises }) {
         const { url } = part.image_url;
         artifactPromises.push(
           (async () => {
-            const filename = `${output.name}_${output.tool_call_id}_img_${nanoid()}`;
+            const filename = `${output.tool_call_id}-image-${new Date().getTime()}`;
             const file = await saveBase64Image(url, {
               req,
               filename,

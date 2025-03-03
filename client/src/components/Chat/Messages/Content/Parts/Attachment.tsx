@@ -12,13 +12,7 @@ export default function Attachment({ attachment }: { attachment?: TAttachment })
 
   if (isImage) {
     return (
-      <Image
-        altText={attachment.filename}
-        imagePath={filepath}
-        height={height}
-        width={width}
-        className="mb-4"
-      />
+      <Image altText={attachment.filename} imagePath={filepath} height={height} width={width} />
     );
   }
   return null;

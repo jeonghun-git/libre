@@ -14,8 +14,6 @@ describe('loadDefaultInterface', () => {
         bookmarks: true,
         multiConvo: true,
         agents: true,
-        temporaryChat: true,
-        runCode: true,
       },
     };
     const configDefaults = { interface: {} };
@@ -27,8 +25,6 @@ describe('loadDefaultInterface', () => {
       [PermissionTypes.BOOKMARKS]: { [Permissions.USE]: true },
       [PermissionTypes.MULTI_CONVO]: { [Permissions.USE]: true },
       [PermissionTypes.AGENTS]: { [Permissions.USE]: true },
-      [PermissionTypes.TEMPORARY_CHAT]: { [Permissions.USE]: true },
-      [PermissionTypes.RUN_CODE]: { [Permissions.USE]: true },
     });
   });
 
@@ -39,8 +35,6 @@ describe('loadDefaultInterface', () => {
         bookmarks: false,
         multiConvo: false,
         agents: false,
-        temporaryChat: false,
-        runCode: false,
       },
     };
     const configDefaults = { interface: {} };
@@ -52,8 +46,6 @@ describe('loadDefaultInterface', () => {
       [PermissionTypes.BOOKMARKS]: { [Permissions.USE]: false },
       [PermissionTypes.MULTI_CONVO]: { [Permissions.USE]: false },
       [PermissionTypes.AGENTS]: { [Permissions.USE]: false },
-      [PermissionTypes.TEMPORARY_CHAT]: { [Permissions.USE]: false },
-      [PermissionTypes.RUN_CODE]: { [Permissions.USE]: false },
     });
   });
 
@@ -68,8 +60,6 @@ describe('loadDefaultInterface', () => {
       [PermissionTypes.BOOKMARKS]: { [Permissions.USE]: undefined },
       [PermissionTypes.MULTI_CONVO]: { [Permissions.USE]: undefined },
       [PermissionTypes.AGENTS]: { [Permissions.USE]: undefined },
-      [PermissionTypes.TEMPORARY_CHAT]: { [Permissions.USE]: undefined },
-      [PermissionTypes.RUN_CODE]: { [Permissions.USE]: undefined },
     });
   });
 
@@ -80,8 +70,6 @@ describe('loadDefaultInterface', () => {
         bookmarks: undefined,
         multiConvo: undefined,
         agents: undefined,
-        temporaryChat: undefined,
-        runCode: undefined,
       },
     };
     const configDefaults = { interface: {} };
@@ -93,8 +81,6 @@ describe('loadDefaultInterface', () => {
       [PermissionTypes.BOOKMARKS]: { [Permissions.USE]: undefined },
       [PermissionTypes.MULTI_CONVO]: { [Permissions.USE]: undefined },
       [PermissionTypes.AGENTS]: { [Permissions.USE]: undefined },
-      [PermissionTypes.TEMPORARY_CHAT]: { [Permissions.USE]: undefined },
-      [PermissionTypes.RUN_CODE]: { [Permissions.USE]: undefined },
     });
   });
 
@@ -105,8 +91,6 @@ describe('loadDefaultInterface', () => {
         bookmarks: false,
         multiConvo: undefined,
         agents: true,
-        temporaryChat: undefined,
-        runCode: false,
       },
     };
     const configDefaults = { interface: {} };
@@ -118,8 +102,6 @@ describe('loadDefaultInterface', () => {
       [PermissionTypes.BOOKMARKS]: { [Permissions.USE]: false },
       [PermissionTypes.MULTI_CONVO]: { [Permissions.USE]: undefined },
       [PermissionTypes.AGENTS]: { [Permissions.USE]: true },
-      [PermissionTypes.TEMPORARY_CHAT]: { [Permissions.USE]: undefined },
-      [PermissionTypes.RUN_CODE]: { [Permissions.USE]: false },
     });
   });
 
@@ -131,8 +113,6 @@ describe('loadDefaultInterface', () => {
         bookmarks: true,
         multiConvo: true,
         agents: true,
-        temporaryChat: true,
-        runCode: true,
       },
     };
 
@@ -143,8 +123,6 @@ describe('loadDefaultInterface', () => {
       [PermissionTypes.BOOKMARKS]: { [Permissions.USE]: true },
       [PermissionTypes.MULTI_CONVO]: { [Permissions.USE]: true },
       [PermissionTypes.AGENTS]: { [Permissions.USE]: true },
-      [PermissionTypes.TEMPORARY_CHAT]: { [Permissions.USE]: true },
-      [PermissionTypes.RUN_CODE]: { [Permissions.USE]: true },
     });
   });
 
@@ -159,8 +137,6 @@ describe('loadDefaultInterface', () => {
       [PermissionTypes.BOOKMARKS]: { [Permissions.USE]: undefined },
       [PermissionTypes.MULTI_CONVO]: { [Permissions.USE]: true },
       [PermissionTypes.AGENTS]: { [Permissions.USE]: undefined },
-      [PermissionTypes.TEMPORARY_CHAT]: { [Permissions.USE]: undefined },
-      [PermissionTypes.RUN_CODE]: { [Permissions.USE]: undefined },
     });
   });
 
@@ -175,8 +151,6 @@ describe('loadDefaultInterface', () => {
       [PermissionTypes.BOOKMARKS]: { [Permissions.USE]: undefined },
       [PermissionTypes.MULTI_CONVO]: { [Permissions.USE]: false },
       [PermissionTypes.AGENTS]: { [Permissions.USE]: undefined },
-      [PermissionTypes.TEMPORARY_CHAT]: { [Permissions.USE]: undefined },
-      [PermissionTypes.RUN_CODE]: { [Permissions.USE]: undefined },
     });
   });
 
@@ -191,8 +165,6 @@ describe('loadDefaultInterface', () => {
       [PermissionTypes.BOOKMARKS]: { [Permissions.USE]: undefined },
       [PermissionTypes.MULTI_CONVO]: { [Permissions.USE]: undefined },
       [PermissionTypes.AGENTS]: { [Permissions.USE]: undefined },
-      [PermissionTypes.TEMPORARY_CHAT]: { [Permissions.USE]: undefined },
-      [PermissionTypes.RUN_CODE]: { [Permissions.USE]: undefined },
     });
   });
 
@@ -203,8 +175,6 @@ describe('loadDefaultInterface', () => {
         bookmarks: false,
         multiConvo: true,
         agents: false,
-        temporaryChat: true,
-        runCode: false,
       },
     };
     const configDefaults = { interface: {} };
@@ -216,8 +186,6 @@ describe('loadDefaultInterface', () => {
       [PermissionTypes.BOOKMARKS]: { [Permissions.USE]: false },
       [PermissionTypes.MULTI_CONVO]: { [Permissions.USE]: true },
       [PermissionTypes.AGENTS]: { [Permissions.USE]: false },
-      [PermissionTypes.TEMPORARY_CHAT]: { [Permissions.USE]: true },
-      [PermissionTypes.RUN_CODE]: { [Permissions.USE]: false },
     });
   });
 
@@ -229,8 +197,6 @@ describe('loadDefaultInterface', () => {
         bookmarks: true,
         multiConvo: false,
         agents: undefined,
-        temporaryChat: undefined,
-        runCode: undefined,
       },
     };
 
@@ -241,8 +207,6 @@ describe('loadDefaultInterface', () => {
       [PermissionTypes.BOOKMARKS]: { [Permissions.USE]: true },
       [PermissionTypes.MULTI_CONVO]: { [Permissions.USE]: false },
       [PermissionTypes.AGENTS]: { [Permissions.USE]: undefined },
-      [PermissionTypes.TEMPORARY_CHAT]: { [Permissions.USE]: undefined },
-      [PermissionTypes.RUN_CODE]: { [Permissions.USE]: undefined },
     });
   });
 });

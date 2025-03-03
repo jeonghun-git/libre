@@ -1,5 +1,4 @@
 const axios = require('axios');
-const { Providers } = require('@librechat/agents');
 const { HttpsProxyAgent } = require('https-proxy-agent');
 const { EModelEndpoint, defaultModels, CacheKeys } = require('librechat-data-provider');
 const { inputSchema, logAxiosError, extractBaseURL, processModelData } = require('~/utils');
@@ -58,7 +57,7 @@ const fetchModels = async ({
     return models;
   }
 
-  if (name && name.toLowerCase().startsWith(Providers.OLLAMA)) {
+  if (name && name.toLowerCase().startsWith('ollama')) {
     return await OllamaClient.fetchModels(baseURL);
   }
 
@@ -129,6 +128,9 @@ const fetchOpenAIModels = async (opts, _models = []) => {
     //   .split('/deployments')[0]
     //   .concat(`/models?api-version=${azure.azureOpenAIApiVersion}`);
     // apiKey = azureOpenAIApiKey;
+  } else if (process.env.OPENROUTER_API_KEY) {
+    reverseProxyUrl = 'https://openrouter.ai/api/v1';
+    apiKey = process.env.OPENROUTER_API_KEY;
   }
 
   if (reverseProxyUrl) {
@@ -215,7 +217,7 @@ const getOpenAIModels = async (opts) => {
     return models;
   }
 
-  if (userProvidedOpenAI) {
+  if (userProvidedOpenAI && !process.env.OPENROUTER_API_KEY) {
     return models;
   }
 

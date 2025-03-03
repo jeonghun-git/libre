@@ -224,11 +224,10 @@ async function uploadFileToFirebase({ req, file, file_id }) {
 /**
  * Retrieves a readable stream for a file from Firebase storage.
  *
- * @param {ServerRequest} _req
  * @param {string} filepath - The filepath.
  * @returns {Promise<ReadableStream>} A readable stream of the file.
  */
-async function getFirebaseFileStream(_req, filepath) {
+async function getFirebaseFileStream(filepath) {
   try {
     const storage = getFirebaseStorage();
     if (!storage) {
