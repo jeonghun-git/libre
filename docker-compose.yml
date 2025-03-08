@@ -29,11 +29,16 @@ services:
 
   mongodb:
     container_name: chat-mongodb
+
     image: mongo
     restart: always
     volumes:
       - ./data-node:/data/db
-    command: mongod --noauth
+    command: mongod --noauth --bind_ip_all
+    ports:
+      - 27017:27017
+
+
   meilisearch:
     container_name: chat-meilisearch
     image: getmeili/meilisearch:v1.12.3
@@ -61,8 +66,8 @@ services:
       - DB_HOST=vectordb
       - RAG_PORT=${RAG_PORT:-8000}
     volumes:
-      - ./rag_api:/app/rag_api # RAG API 코드 마운트
-      - ./config:/app/config # 설정 파일 마운트
+      - ./rag_api:/app/rag_api
+      - ./config:/app/config
     restart: always
     depends_on:
       - vectordb

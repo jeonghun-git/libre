@@ -37,7 +37,7 @@ export default function Footer({ className }: { className?: string }) {
   const mainContentParts = (
     typeof config?.customFooter === 'string'
       ? config.customFooter
-      : '[jeonghun-chat ' +
+      : '[jhun-park.xyz ' +
         Constants.VERSION +
         '](https://jhun-park.xyz) - ' +
         localize('com_ui_latest_footer')

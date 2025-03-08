@@ -23,68 +23,68 @@
 
 services:
 
-# USE LIBRECHAT CONFIG FILE
+  # USE LIBRECHAT CONFIG FILE
   # api:
   api:
     image: librechat
 
     volumes:
-    - type: bind
-      source: ./librechat.yaml
-      target: /app/librechat.yaml
+      - type: bind
+        source: ./librechat.yaml
+        target: /app/librechat.yaml
 
-  # # LOCAL BUILD
+    # # LOCAL BUILD
     build:
       context: .
       target: node
 
-# # BUILD FROM LATEST IMAGE
-#   api:
-#     image: ghcr.io/danny-avila/librechat-dev:latest
- 
-# # BUILD FROM LATEST IMAGE (NUMBERED RELEASE)
-#   api:
-#     image: ghcr.io/danny-avila/librechat:latest
+  # # BUILD FROM LATEST IMAGE
+  #   api:
+  #     image: ghcr.io/danny-avila/librechat-dev:latest
 
-# # BUILD FROM LATEST API IMAGE
-#   api:
-#     image: ghcr.io/danny-avila/librechat-dev-api:latest
+  # # BUILD FROM LATEST IMAGE (NUMBERED RELEASE)
+  #   api:
+  #     image: ghcr.io/danny-avila/librechat:latest
 
-# # BUILD FROM LATEST API IMAGE (NUMBERED RELEASE)
-#   api:
-#     image: ghcr.io/danny-avila/librechat-api:latest
+  # # BUILD FROM LATEST API IMAGE
+  #   api:
+  #     image: ghcr.io/danny-avila/librechat-dev-api:latest
 
-# # ADD MONGO-EXPRESS
-#   mongo-express:
-#     image: mongo-express
-#     container_name: mongo-express
-#     environment:
-#       ME_CONFIG_MONGODB_SERVER: mongodb
-#       ME_CONFIG_BASICAUTH_USERNAME: admin
-#       ME_CONFIG_BASICAUTH_PASSWORD: password
-#     ports:
-#       - '8081:8081'
-#     depends_on:
-#       - mongodb
-#     restart: always
+  # # BUILD FROM LATEST API IMAGE (NUMBERED RELEASE)
+  #   api:
+  #     image: ghcr.io/danny-avila/librechat-api:latest
 
-# # USE MONGODB V4.4.18 - FOR OLDER CPU WITHOUT AVX SUPPORT
-#   mongodb:
-#     image: mongo:4.4.18
+  # # ADD MONGO-EXPRESS
+  #   mongo-express:
+  #     image: mongo-express
+  #     container_name: mongo-express
+  #     environment:
+  #       ME_CONFIG_MONGODB_SERVER: mongodb
+  #       ME_CONFIG_BASICAUTH_USERNAME: admin
+  #       ME_CONFIG_BASICAUTH_PASSWORD: password
+  #     ports:
+  #       - '8081:8081'
+  #     depends_on:
+  #       - mongodb
+  #     restart: always
 
-# # DISABLE THE MONGODB CONTAINER - YOU NEED TO SET AN ALTERNATIVE MONGODB URI IN THE .ENV FILE
-#   api:
-#     environment:
-#       - MONGO_URI=${MONGO_URI}
-#   mongodb:
-#     image: tianon/true
-#     command: ""
-#     entrypoint: ""
+  # # USE MONGODB V4.4.18 - FOR OLDER CPU WITHOUT AVX SUPPORT
+  #   mongodb:
+  #     image: mongo:4.4.18
 
-# # EXPOSE MONGODB PORTS - USE CAREFULLY, THIS MAKES YOUR DATABASE VULNERABLE TO ATTACKS
-#   mongodb:
-#     ports:
-#       - 27018:27017
+  # # DISABLE THE MONGODB CONTAINER - YOU NEED TO SET AN ALTERNATIVE MONGODB URI IN THE .ENV FILE
+  #   api:
+  #     environment:
+  #       - MONGO_URI=${MONGO_URI}
+  #   mongodb:
+  #     image: tianon/true
+  #     command: ""
+  #     entrypoint: ""
+
+  # # EXPOSE MONGODB PORTS - USE CAREFULLY, THIS MAKES YOUR DATABASE VULNERABLE TO ATTACKS
+  mongodb:
+    ports:
+      - 27017:27017
 
 # # DISABLE MEILISEARCH
 #   meilisearch:
@@ -147,7 +147,7 @@ services:
 #      REDIS_PASSWORD: RedisChangeMe
 #    volumes:
 #    - ./redis:/data
-  
+
 # # ADD LITELLM MONITORING
 #  langfuse-server:
 #    image: ghcr.io/langfuse/langfuse:latest

@@ -104,3 +104,5 @@ release/
 
 # database
 postgres/
+
+openwebui/

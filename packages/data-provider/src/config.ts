@@ -1137,7 +1137,7 @@ export enum TTSProviders {
 /** Enum for app-wide constants */
 export enum Constants {
   /** Key for the app's version. */
-  VERSION = 'v0.7.7-rc1',
+  VERSION = 'v1.0.0',
   /** Key for the Custom Config's version (librechat.yaml). */
   CONFIG_VERSION = '1.2.1',
   /** Standard value for the first message's `parentMessageId` value, to indicate no parent exists. */

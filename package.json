@@ -1,6 +1,6 @@
 {
   "name": "jeonghun-chat",
-  "version": "v0.7.7-rc1",
+  "version": "v1.0.0",
   "description": "",
   "workspaces": [
     "api",

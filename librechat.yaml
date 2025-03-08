@@ -64,8 +64,8 @@ interface:
   sidePanel: true
   presets: true
   prompts: true
-  bookmarks: false
-  multiConvo: false
+  bookmarks: true
+  multiConvo: true
   agents: false
 
 # Example Registration Object Structure (optional)
@@ -169,7 +169,7 @@ endpoints:
           ]
         fetch: true
       titleConvo: true
-      titleModel: 'deepseek-reasoner'
+      titleModel: 'deepseek-chat'
       modelDisplayLabel: 'deepseek'
 
     # Mistral AI Example
@@ -224,13 +224,16 @@ endpoints:
       apiKey: user_provided
       baseURL: 'https://openrouter.ai/api/v1'
       models:
-        default: ['deepseek/deepseek-r1:free', 'deepseek/deepseek-v3', 'deepseek/deepseek-r1','google/gemini-1.5-flash', ]
+        default: ['deepseek/deepseek-chat','perplexity/r1-1776', 'deepseek/deepseek-r1', 'mistralai/mistral-saba']
         fetch: true
       titleConvo: true
-      titleModel: 'deepseek/deepseek-v3'
+      titleModel: 'openai/gpt-4o-mini'
       # Recommended: Drop the stop parameter from the request as Openrouter models use a variety of stop tokens.
       dropParams: ['stop']
       modelDisplayLabel: 'OpenRouter'
+      summarize: true
+      summaryModel: "openai/gpt-4o-mini"
+      titleMethod: "functions"
 
     # Portkey AI Example
     # - name: "Portkey"
@@ -249,23 +252,25 @@ endpoints:
     #   forcePrompt: false
     #   modelDisplayLabel: 'Portkey'
     #   iconURL: https://images.crunchbase.com/image/upload/c_pad,f_auto,q_auto:eco,dpr_1/rjqy7ghvjoiu4cd1xjbf
-# fileConfig:
-#   endpoints:
-#     assistants:
-#       fileLimit: 5
-#       fileSizeLimit: 10  # Maximum size for an individual file in MB
-#       totalSizeLimit: 50  # Maximum total size for all files in a single request in MB
-#       supportedMimeTypes:
-#         - "image/.*"
-#         - "application/pdf"
-#     openAI:
-#       disabled: true  # Disables file uploading to the OpenAI endpoint
-#     default:
-#       totalSizeLimit: 20
-#     YourCustomEndpointName:
-#       fileLimit: 2
-#       fileSizeLimit: 5
-#   serverFileSizeLimit: 100  # Global server file size limit in MB
-#   avatarSizeLimit: 2  # Limit for user avatar image size in MB
+fileConfig:
+  endpoints:
+    assistants:
+      fileLimit: 5
+      fileSizeLimit: 10  # Maximum size for an individual file in MB
+      totalSizeLimit: 50  # Maximum total size for all files in a single request in MB
+      supportedMimeTypes:
+        - "image/.*"
+        - "application/pdf"
+    openrouter:
+      disabled: false
+    openAI:
+      disabled: false  # Disables file uploading to the OpenAI endpoint
+    default:
+      totalSizeLimit: 20
+    YourCustomEndpointName:
+      fileLimit: 2
+      fileSizeLimit: 5
+  serverFileSizeLimit: 100  # Global server file size limit in MB
+  avatarSizeLimit: 2  # Limit for user avatar image size in MB
 # See the Custom Configuration Guide for more information on Assistants Config:
 # https://www.librechat.ai/docs/configuration/librechat_yaml/object_structure/assistants_endpoint
