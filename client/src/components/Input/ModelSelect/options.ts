@@ -20,5 +20,5 @@ export const options: { [key: string]: FC<TModelSelectProps> } = {
 
 export const multiChatOptions = {
   ...options,
-  [EModelEndpoint.gptPlugins]: PluginsByIndex,
+  // [EModelEndpoint.gptPlugins]: PluginsByIndex, // Plugin 옵션 제거
 };

@@ -224,16 +224,17 @@ endpoints:
       apiKey: user_provided
       baseURL: 'https://openrouter.ai/api/v1'
       models:
-        default: ['deepseek/deepseek-chat','perplexity/r1-1776', 'deepseek/deepseek-r1', 'mistralai/mistral-saba']
+        default: ['deepseek/deepseek-chat','perplexity/r1-1776', 'perplexity/sonar-reasoning-pro', 'deepseek/deepseek-r1', 'mistralai/mistral-saba']
         fetch: true
       titleConvo: true
-      titleModel: 'openai/gpt-4o-mini'
+      titleModel: 'deepseek/deepseek-chat'
       # Recommended: Drop the stop parameter from the request as Openrouter models use a variety of stop tokens.
       dropParams: ['stop']
       modelDisplayLabel: 'OpenRouter'
       summarize: true
-      summaryModel: "openai/gpt-4o-mini"
+      summaryModel: "deepseek/deepseek-chat"
       titleMethod: "functions"
+
 
     # Portkey AI Example
     # - name: "Portkey"
@@ -252,6 +253,7 @@ endpoints:
     #   forcePrompt: false
     #   modelDisplayLabel: 'Portkey'
     #   iconURL: https://images.crunchbase.com/image/upload/c_pad,f_auto,q_auto:eco,dpr_1/rjqy7ghvjoiu4cd1xjbf
+
 fileConfig:
   endpoints:
     assistants:

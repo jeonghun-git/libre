@@ -17,7 +17,7 @@ const CONTENT_STYLES = {
     'absolute left-0 h-[calc(100%-10px)] border-l-2 border-border-medium dark:border-border-heavy',
   partBorder:
     'absolute left-0 h-[calc(100%)] border-l-2 border-border-medium dark:border-border-heavy',
-  text: 'whitespace-pre-wrap leading-[26px]',
+  text: 'whitespace-pre-wrap leading-[26px] text-[14px] text-[#A6A6A6]',
 } as const;
 
 export const ThinkingContent: FC<{ children: React.ReactNode; isPart?: boolean }> = memo(
